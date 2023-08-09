@@ -16,7 +16,6 @@ import java.net.URL;
 public class Main extends Application {
     BorderPane root;
     Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
 
