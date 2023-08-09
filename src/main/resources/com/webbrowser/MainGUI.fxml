@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.webbrowser.Controller">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@light.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.webbrowser.Controller">
+    <top>
+        <HBox alignment="CENTER_LEFT">
+            <Button minWidth="36.0" onAction="#historyBack" prefHeight="36.0" prefWidth="36.0" text="&lt;" />
+         <Button minWidth="33.0" onAction="#historyForward" prefHeight="36.0" prefWidth="36.0" text="&gt;" />
+            <TextField fx:id="urlTextField" prefHeight="36.0" prefWidth="50000.0" promptText="Inserisci URL o termine di ricerca" />
+         <Button onAction="#navigateButtonClicked" text="GO" />
+        </HBox>
+    </top>
+    <center>
+        <WebView fx:id="webView" prefHeight="400.0" />
+    </center>
+    <Button text="Hello!" />
+</BorderPane>

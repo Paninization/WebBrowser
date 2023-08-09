@@ -14,43 +14,43 @@ import java.net.URL;
 
 
 public class Main extends Application {
+    BorderPane root;
+    Scene scene;
+
     @Override
     public void start(Stage stage) throws IOException {
-        WebView webView = new WebView();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainGUI.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 800, 600);
+
+        WebView webView = (WebView) root.lookup("#webView");  // Trova la WebView nell'elemento radice
         //https://aperiodic-equipment.000webhostapp.com/
-        webView.getEngine().load("https://it.wikipedia.org/wiki/Front-end_e_back-end"); // Inserisci l'URL del sito web
+        //http://dcavallero.altervista.org/new/articoli/articoli.php
+        // https://it.wikipedia.org/wiki/Front-end_e_back-end
+        webView.getEngine().load("https://www.google.com");
 
         webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
-
             String extension = getExtensionFromUrl(newValue);
             if (extension.equals(".fxml")) {
                 try {
                     String xmlContent = downloadFxmlContentFromHttp(newValue);
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlContent.getBytes());
                     FXMLLoader loader = new FXMLLoader();
-                    Parent root = loader.load(inputStream);
-                    scene = new Scene(root, 800, 600);
-                    stage.setScene(scene);
-
+                    Parent newRoot = loader.load(inputStream);
+                    scene.setRoot(newRoot);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-
-        this.root = new BorderPane(webView);
-        scene = new Scene(root, 800, 600);
-
         stage.setTitle("JavaFX WebView Example");
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
-
-
     }
 
-    BorderPane root;
-    Scene scene;
 
     private String getExtensionFromUrl(String url) {
         try {
